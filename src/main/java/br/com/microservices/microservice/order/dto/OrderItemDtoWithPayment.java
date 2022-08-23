@@ -5,7 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class OrderItemDto {
+public class OrderItemDtoWithPayment {
     private Integer amount;
     private String description;
+    private Integer paymentId;
+//    @JsonIgnore
+//    private OrderDto orderDto;
 }

@@ -28,27 +28,23 @@ public class OrderController {
         @GetMapping("/{id}")
         public ResponseEntity<OrderDto> findByID(@PathVariable @NotNull Integer id) {
             OrderDto dto = orderService.findById(id);
-
             return  ResponseEntity.ok(dto);
         }
 
-        @PostMapping()
+        @PostMapping
         public ResponseEntity<OrderDto> createdOrder(@RequestBody @Valid OrderDto dto, UriComponentsBuilder uriBuilder) {
             OrderDto orderMade = orderService.createdOrder(dto);
-
             URI address = uriBuilder.path("/order/{id}").buildAndExpand(orderMade.getId()).toUri();
 
             return ResponseEntity.created(address).body(orderMade);
-
         }
 
         @PutMapping("/{id}/status")
         public ResponseEntity<OrderDto> updateStatus(@PathVariable Integer id, @RequestBody StatusDto status){
            OrderDto dto = orderService.updateStatus(id, status);
 
-            return ResponseEntity.ok(dto);
+           return ResponseEntity.ok(dto);
         }
-
 
         @PutMapping("/{id}/paid")
         public ResponseEntity<Void> approvePaymentOrder(@PathVariable @NotNull Integer id) {

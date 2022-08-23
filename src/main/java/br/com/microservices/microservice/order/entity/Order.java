@@ -1,7 +1,8 @@
 package br.com.microservices.microservice.order.entity;
 
 import br.com.microservices.microservice.order.enums.Status;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -13,7 +14,6 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
-@Builder
 public class Order {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -25,6 +25,6 @@ public class Order {
     @NotNull @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(cascade=CascadeType.PERSIST, mappedBy="order")
+    @OneToMany(mappedBy="order")
     private List<OrderItem> items = new ArrayList<>();
 }
