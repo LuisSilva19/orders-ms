@@ -11,16 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-
-    @Transactional
-    @Modifying(clearAutomatically = true)
-    @Query(value = "update orders o set o.status = :status where o.id = :orderId", nativeQuery = true)
-    void updateStatus(@Param("status")Status status,
-                      @Param("orderId")Integer orderId);
-
-    @Query(value = "select o.* from order_item oi " +
-            "join orders o " +
-            "on (o.order_item_id  = oi.id) " +
+    @Query(value = "select o.* from orders o " +
+            "join  order_item oi " +
+            "on (oi.order_id = o.id) " +
             "where o.id = :id", nativeQuery = true)
     Optional<Order> orderWithItems(@Param("id")Integer id);
 

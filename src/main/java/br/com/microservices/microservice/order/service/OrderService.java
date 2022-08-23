@@ -9,6 +9,7 @@ import br.com.microservices.microservice.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
@@ -58,14 +59,15 @@ public class OrderService {
         Order order = orderWithItems(id);
 
         order.setStatus(dto.getStatus());
-        orderRepository.updateStatus(dto.getStatus(), order.getId());
+        orderRepository.save(order);
         return modelMapper.map(order, OrderDto.class);
     }
 
+    @Transactional
     public void approvePaymentOrder(Integer id) {
         Order order = orderWithItems(id);
         order.setStatus(Status.PAID);
-        orderRepository.updateStatus(Status.PAID, order.getId());
+        orderRepository.save(order);
     }
 
     public Order orderWithItems(Integer id){
