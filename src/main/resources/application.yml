@@ -3,9 +3,9 @@ spring:
     name: order-ms
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/springbootdb?currentSchema=order
-    username: luis
-    password: 12345
+    url: jdbc:postgresql://localhost:5432/database_spring?currentSchema=order
+    username: postgres
+    password: 12345678
     # JPA properties
     jpa:
       hibernate:
@@ -17,6 +17,21 @@ spring:
       generate-ddl: true
   flyway:
     defaultSchema: order
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 5000
+          multiplier: 1
+          max-interval: 300000
+
 server:
   port: 0
 
